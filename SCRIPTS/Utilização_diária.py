@@ -1,4 +1,4 @@
-from SCRIPTLOJA import ler_codigos_e_linhas, recebe_codigo, recebe_quantidade, recebe_informacao_valida
+from Construcao_de_cardapio import ler_codigos_e_linhas, recebe_codigo, recebe_quantidade, recebe_informacao_valida
 
 
 def ler_escolha_continuar():
@@ -52,8 +52,9 @@ def recebe_pedido(dict_codigos):
 	for codigo in itens_pedidos:
 		print(f'{itens_pedidos[codigo]["codigo"]}\t{itens_pedidos[codigo]["nome"]}\t'
 				f'{itens_pedidos[codigo]["quantidade"]:>10}\t{itens_pedidos[codigo]["preco"]:>13.2f}')
-	print(8 * '\t', f'TOTAL: R${preco:>7.2f}')
+	print(7 * '\t', f' TOTAL: R${preco:>13.2f}')
 	return dict_mesa
+
 
 
 def mostra_cardapio(list_linhas):
@@ -76,7 +77,7 @@ def registra_pedido(dict_mesa, dict_codigos, list_linhas):
 
 
 def registra_no_cardapio(list_linhas, dict_codigos, dict_pedido):
-	arquivo = open('CARDAPIO.txt', 'w')
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	for linha in list_linhas:
 		if not linha[0] == 'C':
 			codigo_linha = linha.split('\t')[0]

@@ -5,5 +5,5 @@ CODIGO  NOME            QUANTIDADE	PRECO PARCIAL
 0005	COXINHA        	         2	         8.00
 0006	CAXINHA CATUP  	         1	         4.50
 0003	FRANGO ARABE   	         1	         7.50
-								 TOTAL: R$  28.00
+							  TOTAL:    R$  28.00
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

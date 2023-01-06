@@ -17,7 +17,7 @@ def cadastra_item():
 	preco = recebe_preco('Digite o preco do produto: ')
 	quantidade = recebe_quantidade('Digite a quantidade atual desse produto: ')
 	
-	arquivo = open('CARDAPIO.txt', 'w')
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	for linha in linhas:
 		arquivo.write(linha)
 	arquivo.write(f'{codigo}\t{nome}\t{preco:>5.2f}\t{quantidade}\n')
@@ -25,7 +25,7 @@ def cadastra_item():
 	
 	
 def ler_codigos_e_linhas():
-	arquivo = open('CARDAPIO.txt', 'r')
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'r')
 	list_linhas = arquivo.readlines()
 	arquivo.close()
 	
@@ -49,7 +49,7 @@ def altera_item():
 		print('O CÓDIGO SELECIONADO NÃO ESTÁ NO BANCO DE DADOS. SELECIONE UM CÓDIGO DO BANCO.')
 		codigo = recebe_codigo('Digite o código do produto a ser alterado: ')
 	
-	arquivo = open('CARDAPIO.txt', 'w')
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	
 	for linha in linhas:
 		if linha[0] == 'USUARIOS':
@@ -95,7 +95,8 @@ def altera_item():
 				novo_nome = nome_atual
 				novo_preco = preco_atual
 				novo_quantidade = recebe_quantidade('Digite a nova quantidade do produto: ')
-			arquivo.write(f'{novo_codigo}\t{novo_nome}\t{novo_preco:>5.2f}\t{novo_quantidade}\n')
+				novo_quantidade = f'{novo_quantidade}\n'
+			arquivo.write(f'{novo_codigo}\t{novo_nome}\t{novo_preco:>5.2f}\t{novo_quantidade}')
 			continue
 		arquivo.write(linha)
 	arquivo.close()
@@ -113,7 +114,7 @@ def excliur_item():
 		print('O CÓDIGO SELECIONADO NÃO ESTÁ NO BANCO DE DADOS. SELECIONE UM CÓDIGO DO BANCO.')
 		codigo = recebe_codigo('Digite o código do produto a ser excluído: ')
 	
-	arquivo = open('CARDAPIO.txt', 'w')
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	for linha in linhas:
 		if linha[0] == 'USUARIOS':
 			arquivo.write(linha)
