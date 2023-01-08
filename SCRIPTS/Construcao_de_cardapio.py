@@ -8,7 +8,7 @@ def cadastra_item():
 	if codigo == '0':
 		return True
 	
-	codigos, linhas = ler_codigos_e_linhas()
+	codigos, linhas = recebe_func.ler_codigos_e_linhas()
 	
 	if codigo in codigos:
 		print('CODIGO JA CADASTRADO. OPERAÇÃO CANCELADA.')
@@ -25,23 +25,10 @@ def cadastra_item():
 	arquivo.close()
 	
 	
-def ler_codigos_e_linhas():
-	arquivo = open('REGISTROS\\CARDAPIO.txt', 'r')
-	list_linhas = arquivo.readlines()
-	arquivo.close()
-	
-	dict_codigos = {}
-	for linha in list_linhas:
-		if linha[0] == 'USUARIOS':
-			continue
-		dict_codigos[linha.split('\t')[0]] = linha.split('\t')
-	return dict_codigos, list_linhas
-
-	
 def altera_item():
 	print('VOCÊ SELECIONOU "ALTERAR ITEM"')
 	
-	codigos, linhas = ler_codigos_e_linhas()
+	codigos, linhas = recebe_func.ler_codigos_e_linhas()
 	
 	codigo = recebe_func.codigo('Digite o código do produto a ser alterado (0 para retornar ao menu anterior): ')
 	if codigo == '0':
@@ -106,7 +93,7 @@ def altera_item():
 def excliur_item():
 	print('VOCÊ SELECIONOU "EXCLUIR ITEM"')
 	
-	codigos, linhas = ler_codigos_e_linhas()
+	codigos, linhas = recebe_func.ler_codigos_e_linhas()
 	
 	codigo = recebe_func.codigo('Digite o código do produto a ser excluído (0 para retornar ao menu anterior): ')
 	if codigo == '0':
@@ -153,7 +140,7 @@ def verifica_senha(time=1):
 	return verifica_senha(time)
 
 
-def ler_escolha_menu():
+def mostra_menu():
 	print('Abaixo as opções da máquina:')
 	print('[1] Cadastrar novo item')
 	print('[2] Alterar item existente')
@@ -166,7 +153,7 @@ def ler_escolha_menu():
 if __name__ == '__main__':
 	verifica_senha()
 	while True:
-		opcao = ler_escolha_menu()
+		opcao = mostra_menu()
 		if opcao == 1:
 			cadastra_item()
 		if opcao == 2:

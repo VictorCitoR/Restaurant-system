@@ -54,3 +54,17 @@ def opcao_valida(str_pergunta, int_qtd):
 		print('OPÇÃO INVÁLIDA. DIGITE UM NÚMERO DENTRE AS OPÇÕES.')
 		return opcao_valida(str_pergunta, int_qtd)
 	return recebimento
+
+
+def ler_codigos_e_linhas():
+	arquivo = open('REGISTROS\\CARDAPIO.txt', 'r')
+	list_linhas = arquivo.readlines()
+	arquivo.close()
+	
+	dict_codigos = {}
+	for linha in list_linhas:
+		if linha[0] == 'USUARIOS':
+			continue
+		dict_codigos[linha.split('\t')[0]] = linha.split('\t')
+	return dict_codigos, list_linhas
+
