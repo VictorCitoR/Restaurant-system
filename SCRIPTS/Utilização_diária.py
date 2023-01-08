@@ -1,11 +1,11 @@
-from Construcao_de_cardapio import ler_codigos_e_linhas, recebe_codigo, recebe_quantidade, recebe_informacao_valida
-
+from Construcao_de_cardapio import ler_codigos_e_linhas
+import recebe_func
 
 def ler_escolha_continuar():
 	print('Abaixo as opções de seguimento:')
 	print('[1] Continuar com novos pedidos')
 	print('[2] Finalizar pedido')
-	escolha = recebe_informacao_valida('Digite sua escolha: ', 2)
+	escolha = recebe_func.opcao_valida('Digite sua escolha: ', 2)
 	return escolha
 
 
@@ -24,18 +24,18 @@ def recebe_pedido(dict_codigos):
 	dict_mesa[mesa] = itens_pedidos
 	novo_pedido = True
 	while novo_pedido:
-		codigo_pedido = recebe_codigo('Digite o código do produto que deseja pedir: ')
+		codigo_pedido = recebe_func.codigo('Digite o código do produto que deseja pedir: ')
 		while codigo_pedido not in dict_codigos:
 			print('ITEM NÃO ENCONTRADO')
-			codigo_pedido = recebe_codigo('Digite o código do produto que deseja pedir: ')
+			codigo_pedido = recebe_func.codigo('Digite o código do produto que deseja pedir: ')
 		if codigo_pedido in itens_pedidos:
 			print('ITEM JA ADICIONADO.')
 		else:
-			qtd_pedido = recebe_quantidade(f'Digite a quantidade do item {codigo_pedido}: ')
+			qtd_pedido = recebe_func.quantidade(f'Digite a quantidade do item {codigo_pedido}: ')
 			while not 0 < qtd_pedido <= int(dict_codigos[codigo_pedido][3]):
 				print(f'A CANTINA NÃO POSSUI ESSA QUANTIDADE DE ITENS, ESCOLHA UMA QUANTIDADE ATÉ '
 						f'{dict_codigos[codigo_pedido][3][:-1]}')
-				qtd_pedido = recebe_quantidade(f'Digite a quantidade do item {codigo_pedido}: ')
+				qtd_pedido = recebe_func.quantidade(f'Digite a quantidade do item {codigo_pedido}: ')
 			
 			preco_por_item = float(dict_codigos[codigo_pedido][2]) * qtd_pedido
 			itens_pedidos[codigo_pedido] = {'codigo': codigo_pedido,
@@ -95,7 +95,7 @@ def ler_escolha_menu():
 	print('[2] Alterar pedido existente')
 	print('[3] Gerar conta de mesa existente')
 	print('[4] ENCERRAR PROGRAMA')
-	escolha = recebe_informacao_valida('Digite sua escolha: ', 4)
+	escolha = recebe_func.opcao_valida('Digite sua escolha: ', 4)
 	return escolha
 
 

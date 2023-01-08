@@ -1,9 +1,10 @@
 from time import sleep
+import recebe_func
 
 
 def cadastra_item():
 	print('VOCÊ SELECIONOU "CADASTRAR ITEM"')
-	codigo = recebe_codigo('Digite o código do produto (0 para retornar ao menu anterior): ')
+	codigo = recebe_func.codigo('Digite o código do produto (0 para retornar ao menu anterior): ')
 	if codigo == '0':
 		return True
 	
@@ -13,9 +14,9 @@ def cadastra_item():
 		print('CODIGO JA CADASTRADO. OPERAÇÃO CANCELADA.')
 		return True
 		
-	nome = recebe_nome('Digite o nome do produto: ')
-	preco = recebe_preco('Digite o preco do produto: ')
-	quantidade = recebe_quantidade('Digite a quantidade atual desse produto: ')
+	nome = recebe_func.nome('Digite o nome do produto: ')
+	preco = recebe_func.preco('Digite o preco do produto: ')
+	quantidade = recebe_func.quantidade('Digite a quantidade atual desse produto: ')
 	
 	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	for linha in linhas:
@@ -42,12 +43,12 @@ def altera_item():
 	
 	codigos, linhas = ler_codigos_e_linhas()
 	
-	codigo = recebe_codigo('Digite o código do produto a ser alterado (0 para retornar ao menu anterior): ')
+	codigo = recebe_func.codigo('Digite o código do produto a ser alterado (0 para retornar ao menu anterior): ')
 	if codigo == '0':
 		return True
 	while codigo not in codigos:
 		print('O CÓDIGO SELECIONADO NÃO ESTÁ NO BANCO DE DADOS. SELECIONE UM CÓDIGO DO BANCO.')
-		codigo = recebe_codigo('Digite o código do produto a ser alterado: ')
+		codigo = recebe_func.codigo('Digite o código do produto a ser alterado: ')
 	
 	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	
@@ -70,31 +71,31 @@ def altera_item():
 			print('[2] NOME')
 			print('[3] PRECO')
 			print('[4] QUANTIDADE')
-			opcao_alteracao = recebe_informacao_valida('Digite a opção desejada: ', 4)
+			opcao_alteracao = recebe_func.opcao_valida('Digite a opção desejada: ', 4)
 			
 			if opcao_alteracao == 1:
-				novo_codigo = recebe_codigo('Digite o código novo do produto: ')
+				novo_codigo = recebe_func.codigo('Digite o código novo do produto: ')
 				while novo_codigo in codigos:
 					print('O CÓDIGO SELECIONADO JÁ ESTÁ NO BANCO DE DADOS. SELECIONE UM CÓDIGO NOVO.')
-					novo_codigo = recebe_codigo('Digite o código novo do produto: ')
+					novo_codigo = recebe_func.codigo('Digite o código novo do produto: ')
 				novo_nome = nome_atual
 				novo_preco = preco_atual
 				novo_quantidade = quantidade_atual
 			elif opcao_alteracao == 2:
 				novo_codigo = codigo_atual
-				novo_nome = recebe_nome('Digite o nome novo do produto: ')
+				novo_nome = recebe_func.nome('Digite o nome novo do produto: ')
 				novo_preco = preco_atual
 				novo_quantidade = quantidade_atual
 			elif opcao_alteracao == 3:
 				novo_codigo = codigo_atual
 				novo_nome = nome_atual
-				novo_preco = recebe_preco('Digite o novo preço do produto: ')
+				novo_preco = recebe_func.preco('Digite o novo preço do produto: ')
 				novo_quantidade = quantidade_atual
 			elif opcao_alteracao == 4:
 				novo_codigo = codigo_atual
 				novo_nome = nome_atual
 				novo_preco = preco_atual
-				novo_quantidade = recebe_quantidade('Digite a nova quantidade do produto: ')
+				novo_quantidade = recebe_func.quantidade('Digite a nova quantidade do produto: ')
 				novo_quantidade = f'{novo_quantidade}\n'
 			arquivo.write(f'{novo_codigo}\t{novo_nome}\t{novo_preco:>5.2f}\t{novo_quantidade}')
 			continue
@@ -107,12 +108,12 @@ def excliur_item():
 	
 	codigos, linhas = ler_codigos_e_linhas()
 	
-	codigo = recebe_codigo('Digite o código do produto a ser excluído (0 para retornar ao menu anterior): ')
+	codigo = recebe_func.codigo('Digite o código do produto a ser excluído (0 para retornar ao menu anterior): ')
 	if codigo == '0':
 		return True
 	while codigo not in codigos:
 		print('O CÓDIGO SELECIONADO NÃO ESTÁ NO BANCO DE DADOS. SELECIONE UM CÓDIGO DO BANCO.')
-		codigo = recebe_codigo('Digite o código do produto a ser excluído: ')
+		codigo = recebe_func.codigo('Digite o código do produto a ser excluído: ')
 	
 	arquivo = open('REGISTROS\\CARDAPIO.txt', 'w')
 	for linha in linhas:
@@ -132,7 +133,7 @@ def excliur_item():
 			print('O ITEM SERÁ EXCLUÍDO E A OPERAÇÃO NÃO PODERÁ SER REVERTIDA.')
 			print('[1] CONTINUAR')
 			print('[2] CANCELAR OPERAÇÃO')
-			opcao_exclusao = recebe_informacao_valida('Digite a opção desejada: ', 2)
+			opcao_exclusao = recebe_func.opcao_valida('Digite a opção desejada: ', 2)
 			if opcao_exclusao == 2:
 				arquivo.write(linha)
 			continue
@@ -158,65 +159,8 @@ def ler_escolha_menu():
 	print('[2] Alterar item existente')
 	print('[3] Excluir item existente')
 	print('[4] ENCERRAR PROGRAMA')
-	escolha = recebe_informacao_valida('Digite sua escolha: ', 4)
+	escolha = recebe_func.opcao_valida('Digite sua escolha: ', 4)
 	return escolha
-
-
-def recebe_informacao_valida(str_pergunta, int_qtd):
-	recebimento = input(str_pergunta)
-	if not (recebimento.isdigit()):
-		print('DIGITE APENAS UM NÚMERO DENTRE AS OPÇÕES.')
-		return recebe_informacao_valida(str_pergunta, int_qtd)
-	recebimento = int(recebimento)
-	if recebimento not in range(1, int_qtd+1):
-		print('OPÇÃO INVÁLIDA. DIGITE UM NÚMERO DENTRE AS OPÇÕES.')
-		return recebe_informacao_valida(str_pergunta, int_qtd)
-	return recebimento
-
-
-def recebe_codigo(str_pergunta):
-	recebimento = input(str_pergunta)
-	if not (recebimento.isnumeric()):
-		print('DIGITE UMA INFORMAÇÃO NUMÉRICA.')
-		return recebe_codigo(str_pergunta)
-	if recebimento == '0':
-		return recebimento
-	if not len(recebimento) == 4:
-		print('CÓDIGO INVÁLIDO, DIGITE UM CÓDIGO DE 4 DIGITOS')
-		return recebe_codigo(str_pergunta)
-	return recebimento
-
-
-def recebe_nome(str_pergunta):
-	recebimento = input(str_pergunta)
-	if len(recebimento) > 15:
-		print('NOME GRANDE DEMAIS, USE NO MÁXIMO 15 CARACTERES.')
-		return recebe_nome(str_pergunta)
-	espaco_disponivel = 15 - len(recebimento)
-	recebimento += espaco_disponivel*' '
-	return recebimento
-
-
-def recebe_preco(str_pergunta):
-	recebimento = input(str_pergunta)
-	try:
-		float(recebimento)
-	except ValueError:
-		print('DIGITE UM VALOR NO FORMATO XX.XX')
-		return recebe_preco(str_pergunta)
-	return float(recebimento)
-
-
-def recebe_quantidade(str_pergunta):
-	recebimento = input(str_pergunta)
-	if not (recebimento.isnumeric()):
-		print('DIGITE UMA INFORMAÇÃO NUMÉRICA.')
-		return recebe_quantidade(str_pergunta)
-	recebimento = int(recebimento)
-	if not 0 < recebimento:
-		print('QUANTIDADE INVÁLIDA.')
-		return recebe_quantidade(str_pergunta)
-	return recebimento
 
 
 if __name__ == '__main__':
