@@ -12,7 +12,7 @@ def codigo(str_pergunta):
 
 
 def nome(str_pergunta):
-	recebimento = input(str_pergunta)
+	recebimento = input(str_pergunta).upper()
 	if len(recebimento) > 15:
 		print('NOME GRANDE DEMAIS, USE NO MÁXIMO 15 CARACTERES.')
 		return nome(str_pergunta)
